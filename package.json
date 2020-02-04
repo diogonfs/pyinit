@@ -3,7 +3,7 @@
 	"displayName": "PyInit",
 	"description": "Automatic generation of python __init__.py files and import statements within folders",
 	"version": "0.0.1",
-	"publisher": "Diogo Nolasco",
+	"publisher": "DiogoNolasco",
 	"engines": {
 		"vscode": "^1.36.0"
 	},
@@ -19,7 +19,7 @@
 		"init",
 		"generator"
 	],
-	"icon": "src/images/piinit_icon.png",
+	"icon": "images/piinit_icon.png",
 	"activationEvents": [
 		"onCommand:extension.generateInit"
 	],
