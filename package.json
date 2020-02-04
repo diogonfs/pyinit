@@ -50,6 +50,10 @@
 			}
 		  ]
 	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/diogonfs/pyinit.git"
+	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
 		"compile": "tsc -p ./",
