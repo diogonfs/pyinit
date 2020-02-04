@@ -2,7 +2,7 @@
 	"name": "pyinit",
 	"displayName": "PyInit",
 	"description": "Automatic generation of python __init__.py files and import statements within folders",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"publisher": "DiogoNolasco",
 	"engines": {
 		"vscode": "^1.36.0"
