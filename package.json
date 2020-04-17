@@ -1,8 +1,8 @@
 {
 	"name": "pyinit",
 	"displayName": "PyInit",
-	"description": "Automatic generation of python __init__.py files and import statements within folders",
-	"version": "0.0.3",
+	"description": "Automatic generation of python __init__.py files",
+	"version": "1.0.0",
 	"publisher": "DiogoNolasco",
 	"engines": {
 		"vscode": "^1.36.0"
@@ -43,12 +43,12 @@
 		},
 		"keybindings": [
 			{
-			  "command": "extension.generateInit",
-			  "key": "ctrl+i",
-			  "mac": "cmd+i",
-			  "when": "explorerResourceIsFolder"
+				"command": "extension.generateInit",
+				"key": "ctrl+i",
+				"mac": "cmd+i",
+				"when": "explorerResourceIsFolder"
 			}
-		  ]
+		]
 	},
 	"repository": {
 		"type": "git",
@@ -64,12 +64,12 @@
 	"devDependencies": {
 		"@types/glob": "^7.1.1",
 		"@types/mocha": "^5.2.6",
-		"@types/node": "^10.14.12",
-		"@types/vscode": "^1.36.0",
-		"glob": "^7.1.4",
-		"mocha": "^6.1.4",
-		"tslint": "^5.12.1",
-		"typescript": "^3.3.1",
-		"vscode-test": "^1.0.0-next.0"
+		"@types/node": "^10.17.19",
+		"@types/vscode": "^1.44.0",
+		"glob": "^7.1.6",
+		"mocha": "^6.2.3",
+		"tslint": "^5.20.1",
+		"typescript": "^3.8.3",
+		"vscode-test": "^1.3.0"
 	}
 }
