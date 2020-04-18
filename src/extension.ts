@@ -1,8 +1,8 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-import * as path from 'path';
 import * as fs from 'fs';
+import * as fileManager from './fileManager';
 
 export function activate(context: vscode.ExtensionContext) {
 
@@ -10,40 +10,20 @@ export function activate(context: vscode.ExtensionContext) {
 
 	let disposable = vscode.commands.registerCommand('extension.generateInit', async (fileObj) => {
 		
-		let counter = 0;
-		if(!fileObj) {
-			await vscode.commands.executeCommand('copyFilePath');
-			fileObj = await vscode.env.clipboard.readText();
-		}
+		fileObj = await fileManager.getValidResource(fileObj);
+		if (!!fileObj) {
+			let dirname = !(typeof fileObj === 'string') ? fileObj.path : fileObj;
+			if (fs.lstatSync(dirname).isDirectory()) {
+				let dirs: any[] = [];
+				fileManager.traverseDir(dirname, dirs);
+				dirs.push(dirname);
 
-		if (fileObj !== null && fileObj !== undefined) {
-			let dirname = !(typeof fileObj === 'string') ? fileObj.path : fileObj ;
-			let dirs = [];
-
-			function traverseDir(dirname: any) {
-				fs.readdirSync(dirname).forEach(file => {
-				  	let fullPath = path.join(dirname, file);
-				  	if (fs.lstatSync(fullPath).isDirectory()) {
-						dirs.push(fullPath);
-						traverseDir(fullPath);
-				   }  
-				});
-			}
-
-			traverseDir(dirname)
-			dirs.push(dirname)
-			
-			dirs.forEach((dir_path) => {
-				if (!fs.existsSync(path.join(dir_path, "__init__.py"))) {
-					counter++;
-					fs.writeFileSync(path.join(dir_path, '__init__.py'), "");
-				}
-			})
-			
-			vscode.window.showInformationMessage(`Pyinit: Generated ${counter} __init__.py file(s)`);
+				const createdFiles = fileManager.generateInits(dirs);
+				vscode.window.showInformationMessage(`Pyinit: Generated ${createdFiles} __init__.py file(s)`);
+			}			
 		}
 		else {
-			vscode.window.showErrorMessage("Pyinit: You must open a directory.");
+			vscode.window.showErrorMessage("Pyinit: You must use it in a directory.");
 		}
 
 	});
