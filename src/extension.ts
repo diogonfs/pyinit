@@ -9,7 +9,7 @@ export function activate(context: vscode.ExtensionContext) {
 	console.log('Congratulations, your extension "pyinit" is now active!');
 
 	let disposable = vscode.commands.registerCommand('extension.generateInit', async (fileObj) => {
-		
+
 		let counter = 0;
 		if(!fileObj) {
 			await vscode.commands.executeCommand('copyFilePath');
@@ -17,7 +17,9 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 
 		if (fileObj !== null && fileObj !== undefined) {
-			let dirname = !(typeof fileObj === 'string') ? fileObj.path : fileObj ;
+			const dirname = typeof fileObj === 'string'
+				? fileObj
+				: fileObj.fsPath || fileObj.path;
 			let dirs = [];
 
 			function traverseDir(dirname: any) {
@@ -26,20 +28,20 @@ export function activate(context: vscode.ExtensionContext) {
 				  	if (fs.lstatSync(fullPath).isDirectory()) {
 						dirs.push(fullPath);
 						traverseDir(fullPath);
-				   }  
+				   }
 				});
 			}
 
 			traverseDir(dirname)
 			dirs.push(dirname)
-			
+
 			dirs.forEach((dir_path) => {
 				if (!fs.existsSync(path.join(dir_path, "__init__.py"))) {
 					counter++;
 					fs.writeFileSync(path.join(dir_path, '__init__.py'), "");
 				}
 			})
-			
+
 			vscode.window.showInformationMessage(`Pyinit: Generated ${counter} __init__.py file(s)`);
 		}
 		else {
